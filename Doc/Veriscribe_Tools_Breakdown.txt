@@ -1,0 +1,523 @@
+================================================================================
+VERISCRIBE — COMPLETE TOOLS & SUBTOOLS BREAKDOWN
+All 21 Tools | What They Need | Categorised by Implementation Type
+================================================================================
+
+SUMMARY
+-------
+Total Tools         : 21
+Needs AI / Model    : 12 tools
+Code + Libs Only    : 9 tools
+File Converter subs : 40+ sub-tools
+
+
+================================================================================
+SECTION A — ALL TOOLS WITH SUBTOOLS (Full List)
+================================================================================
+
+CATEGORY 1: WRITING & LANGUAGE TOOLS
+──────────────────────────────────────────────────────────────────────────────
+
+1. AI DETECTOR
+   What it does : Scans text or documents, returns AI% vs Human% score with
+                  paragraph-level breakdown across 8 detection models.
+   Sub-tools    : None
+
+2. HUMANIZER
+   What it does : Rewrites AI-generated text to sound fully human, bypasses
+                  all major AI detectors while preserving voice and meaning.
+   Sub-tools    : None
+
+3. GRAMMAR FIX
+   What it does : Fixes grammar, spelling, punctuation, style, tone, and flow.
+                  Includes readability score and 20+ language support.
+   Sub-tools    : None
+
+4. AI SUMMARIZER
+   What it does : Condenses any document or URL into key insights. Supports
+                  bullet or prose mode, multi-doc comparison, entity extraction.
+   Sub-tools    : None
+
+5. PLAGIARISM CHECK
+   What it does : Scans text against billions of web pages and academic
+                  databases. Returns originality score and matched sources.
+   Sub-tools    : None
+
+6. CITATION GENERATOR
+   What it does : Auto-generates citations from URL, DOI, or ISBN in APA, MLA,
+                  Chicago, Harvard, IEEE, Vancouver. Builds full bibliography.
+   Sub-tools    : None
+
+
+CATEGORY 2: DOCUMENT CREATION TOOLS
+──────────────────────────────────────────────────────────────────────────────
+
+7. DOC EDITOR
+   What it does : Opens, edits, and saves 40+ file types in one workspace.
+                  Auto-save, tracked changes, comments, revision history.
+   Sub-tools    : None
+
+8. DOC STUDIO
+   What it does : Generates fully structured professional documents from a
+                  plain-language prompt. Supports multiple style presets.
+   Sub-tools    : None
+
+9. VOICE TO DOC
+   What it does : Takes voice input or transcript and builds a complete
+                  formatted document in the selected professional template.
+   Sub-tools (Document Types):
+                  - Business Doc
+                  - PRD (Product Requirements Document)
+                  - SRD (Software Requirements Document)
+                  - FRD (Functional Requirements Document)
+                  - MOM (Minutes of Meeting)
+                  - Legal Brief
+                  - SOP (Standard Operating Procedure)
+                  - Proposal
+                  - Report
+                  - Research Paper
+                  - Executive Summary
+                  - Case Study
+
+10. SMART NOTES
+    What it does : Captures quick notes via text, voice, or image. AI
+                   organises, tags, and links related notes automatically.
+    Sub-tools    : None
+
+11. ADAPTIVE DOCUMENT
+    What it does : Takes one master document and auto-generates four versions:
+                   Expert, Executive, Student, and Beginner.
+    Sub-tools (Output Versions):
+                  - Expert Version
+                  - Executive Version
+                  - Student Version
+                  - Beginner Version
+
+
+CATEGORY 3: INTELLIGENCE & RESEARCH TOOLS
+──────────────────────────────────────────────────────────────────────────────
+
+12. MULTI-SOURCE INTELLIGENCE
+    What it does : Ingests PDFs, DOCX, XLSX, audio, video, YouTube links,
+                   images, and URLs together. AI answers questions across all
+                   sources, finds contradictions, generates notes and quizzes.
+    Sub-tools (Quick Actions):
+                  - Generate Notes
+                  - Create Summary
+                  - Make Flashcards
+                  - Build Quiz Questions
+                  - Find Contradictions
+                  - Export All
+
+13. EXAM PAPER BUILDER
+    What it does : Takes textbooks, past papers, notes, and syllabus. Generates
+                   a complete exam paper with multiple question types and a
+                   separate answer key.
+    Sub-tools (Question Types):
+                  - Multiple Choice (MCQ)
+                  - Short Answer
+                  - Essay
+                  - Diagram Labelling
+                  - Equation / Numerical
+                  - Fill in the Blank
+
+14. NARRATIVE REPORT WRITER
+    What it does : Takes any CSV or data file and writes a full formatted
+                   business report with executive summary, trend analysis,
+                   anomaly highlights, and recommendations.
+    Sub-tools    : None
+
+15. CONTRACT NEGOTIATION COACH
+    What it does : Analyses any contract, identifies risky clauses, predicts
+                   objections, suggests improved wording, and runs a live
+                   negotiation simulation.
+    Sub-tools    : None
+
+
+CATEGORY 4: DOCUMENT PROCESSING TOOLS
+──────────────────────────────────────────────────────────────────────────────
+
+16. FILE CONVERTER
+    What it does : Converts any file to any other format. 40+ conversion types,
+                   no quality loss, no limits.
+
+    Sub-tools — PDF TOOLS (18):
+                  - Merge PDF
+                  - Split PDF
+                  - Compress PDF
+                  - Organize PDF
+                  - Rotate PDF
+                  - Repair PDF
+                  - Protect PDF (add password)
+                  - Unlock PDF (remove password)
+                  - Watermark PDF
+                  - Add Page Numbers
+                  - Crop PDF
+                  - Sign PDF
+                  - Redact PDF
+                  - Compare PDF
+                  - Edit PDF
+                  - Scan to PDF
+                  - OCR PDF
+                  - PDF to PDF/A
+
+    Sub-tools — PDF TO OTHER FORMATS (5):
+                  - PDF to Word (DOC / DOCX)
+                  - PDF to PowerPoint (PPT / PPTX)
+                  - PDF to Excel (XLS / XLSX)
+                  - PDF to JPG
+                  - PDF to TXT
+
+    Sub-tools — OTHER FORMATS TO PDF (6):
+                  - Word to PDF
+                  - PowerPoint to PDF
+                  - Excel to PDF
+                  - Image to PDF (JPG, PNG, WEBP)
+                  - HTML to PDF (URL or code)
+                  - TXT to PDF
+
+    Sub-tools — OFFICE CONVERSIONS (10):
+                  - Word to PowerPoint
+                  - Word to Excel
+                  - Excel to Word
+                  - PowerPoint to Word
+                  - Excel to CSV
+                  - CSV to Excel
+                  - Markdown to PDF
+                  - Markdown to Word
+                  - JSON to Excel
+                  - HTML to Word
+
+    Sub-tools — IMAGE CONVERSIONS (6):
+                  - JPG to PDF
+                  - PNG to PDF
+                  - JPG to PNG
+                  - PNG to JPG
+                  - WEBP to JPG
+                  - JPG to WEBP
+
+    Sub-tools — AUDIO & VIDEO (2):
+                  - MP4 to MP3
+                  - Video to Text (transcript as TXT or DOCX)
+
+    Sub-tools — AI-POWERED CONVERSIONS (2):
+                  - AI Summarizer (doc or URL → clean summary)
+                  - Translate PDF (any language, layout preserved)
+
+    TOTAL FILE CONVERTER SUB-TOOLS: 49
+
+17. SMART FORM EXTRACTOR
+    What it does : Uploads any scanned form, invoice, or government document.
+                   AI extracts every field and table. Exports as JSON, CSV, Excel.
+    Sub-tools    : None
+
+18. DOCUMENT VERSION RECONCILER
+    What it does : Takes two versions of a document. AI generates a plain-English
+                   change summary, flags high-risk changes, side-by-side diff view.
+    Sub-tools    : None
+
+19. DOCUMENT ARCHAEOLOGY
+    What it does : Links all versions, comments, and related files to reconstruct
+                   the full history and reasoning behind any document.
+    Sub-tools    : None
+
+20. DOCUMENT RESURRECTOR
+    What it does : Scans document library for abandoned drafts, shows completeness
+                   percentage, generates a full AI completion draft for each one.
+    Sub-tools    : None
+
+
+CATEGORY 5: MONITORING & SECURITY TOOLS
+──────────────────────────────────────────────────────────────────────────────
+
+21. STALENESS MONITOR
+    What it does : Connects to Google Drive or Notion, watches source changes,
+                   adds staleness badges, sends alerts when documents are outdated.
+    Sub-tools    : None
+
+22. DOCUMENT ANALYTICS
+    What it does : Tracks every shared document — who read it, time on each
+                   section, drop-off points. AI gives improvement recommendations.
+    Sub-tools    : None
+
+23. CONFIDENCE SCORER & TRUST SHIELD
+    What it does : Shows confidence % and exact citation for every AI answer.
+                   Scans every uploaded document for malicious content and
+                   assigns a Trust Score.
+    Sub-tools    : None
+
+24. KNOWLEDGE INTERVIEW BOT
+    What it does : AI interviews the user with targeted questions, structures
+                   spoken answers into a professional formatted document.
+    Sub-tools (Output Document Types):
+                  - SOP
+                  - Training Manual
+                  - Knowledge Base Article
+                  - Report
+                  - Onboarding Guide
+
+
+================================================================================
+SECTION B — TOOLS THAT NEED AI MODEL / MODEL TRAINING
+================================================================================
+
+These tools require a language model, detection model, or speech model.
+They cannot be built with standard libraries alone.
+
+──────────────────────────────────────────────────────────────────────────────
+#   TOOL NAME                  AI / MODELS REQUIRED
+──────────────────────────────────────────────────────────────────────────────
+1   AI Detector                8x detection models (GPTZero, Originality, custom
+                               fine-tuned classifiers per LLM fingerprint)
+                               → Paragraph-level NLP classification model
+
+2   Humanizer                  Fine-tuned LLM for paraphrase + style transfer
+                               → Detector bypass testing loop (auto red-teaming)
+                               → Voice preservation model
+
+3   Grammar Fix                LLM (GPT-4 / Claude) for style and tone rewriting
+                               → Grammar correction model (LanguageTool + LLM layer)
+                               → Readability scoring model (Flesch-Kincaid + LLM)
+
+4   AI Summarizer              LLM summarisation (extractive + abstractive)
+                               → Named entity extraction model
+                               → Multi-document clustering model
+
+8   Doc Studio                 LLM (GPT-4 / Claude) for section-by-section generation
+                               → Document structure inference model
+                               → Template filling and formatting layer
+
+9   Voice to Doc               Speech-to-text model (OpenAI Whisper or equivalent)
+                               → LLM for transcript structuring
+                               → Document template matching model
+
+10  Smart Notes                LLM for note organisation and auto-tagging
+                               → Speech-to-text (Whisper) for voice capture
+                               → Semantic clustering / linking model
+
+11  Adaptive Document          LLM for multi-level rewriting (Expert → Beginner)
+                               → Reading level classification model
+                               → Vocabulary simplification model
+
+12  Multi-Source Intelligence  Multi-modal LLM (text, audio, video, image ingestion)
+                               → RAG (Retrieval-Augmented Generation) pipeline
+                               → Cross-source contradiction detection model
+                               → Flashcard / quiz generation model
+
+13  Exam Paper Builder         LLM for question generation (MCQ, essay, short answer)
+                               → Difficulty calibration model
+                               → Answer key generation model
+
+14  Narrative Report Writer    LLM for narrative writing from structured data
+                               → Data trend detection model
+                               → Anomaly detection model
+                               → Chart auto-generation model
+
+15  Contract Negotiation Coach LLM for clause risk classification
+                               → Objection prediction model
+                               → Live negotiation simulation (conversational AI)
+                               → Clause rewriting model
+
+17  Smart Form Extractor       OCR model (Tesseract + ML layer)
+                               → Form field extraction model (LayoutLM or similar)
+                               → Table structure recognition model
+
+24  Knowledge Interview Bot    LLM for adaptive question generation
+                               → Answer structuring model
+                               → Document assembly model
+
+──────────────────────────────────────────────────────────────────────────────
+TOTAL TOOLS NEEDING AI MODEL: 14
+(Some overlap — e.g. Smart Form Extractor uses OCR + ML, listed here)
+──────────────────────────────────────────────────────────────────────────────
+
+
+================================================================================
+SECTION C — TOOLS THAT NEED ONLY CODING & LIBRARIES (No AI Model Required)
+================================================================================
+
+These tools can be built fully using standard libraries, APIs, and algorithms.
+No LLM or trained model is required.
+
+──────────────────────────────────────────────────────────────────────────────
+#   TOOL NAME                  LIBRARIES / STACK REQUIRED
+──────────────────────────────────────────────────────────────────────────────
+5   Plagiarism Check           Copyscape API / iThenticate API (web index access)
+                               → TF-IDF + Jaccard similarity (string matching)
+                               → Regex-based paraphrase detection
+                               → Web scraper / search API integration
+
+6   Citation Generator         CrossRef API (DOI metadata)
+                               → Google Books API (ISBN metadata)
+                               → Open Graph / meta tag parser (URL metadata)
+                               → CSL (Citation Style Language) JSON processor
+                               → citation-js npm library
+
+7   Doc Editor                 ProseMirror / TipTap (rich text editor)
+                               → Mammoth.js (DOCX parsing)
+                               → PDF.js + pdf-lib (PDF read/write)
+                               → SheetJS (XLSX parsing)
+                               → LibreOffice headless (server-side conversion)
+                               → diff-match-patch (tracked changes)
+
+16  File Converter             LibreOffice headless (Office format conversions)
+                               → Ghostscript (PDF operations: merge, split, compress)
+                               → ImageMagick (image conversions)
+                               → Tesseract OCR (Scan to PDF, OCR PDF)
+                               → FFmpeg (MP4 to MP3, Video to Text)
+                               → Whisper (Video to Text — speech only, not LLM)
+                               → qpdf / pdftk (PDF manipulation)
+                               → Sharp (image processing — JPG, PNG, WEBP)
+                               → pdf2pic (PDF to image)
+
+18  Document Version           diff-match-patch (line-by-line diff engine)
+    Reconciler                 → jsondiffpatch (structured diff for JSON/DOCX XML)
+                               → Mammoth.js (DOCX parsing)
+                               → Rule-based clause risk flagging (regex + keyword)
+
+19  Document Archaeology       Google Drive API / Notion API (version history access)
+                               → git-style version graph (DAG data structure)
+                               → Comment thread aggregator
+                               → File metadata parser
+
+20  Document Resurrector       File metadata scanner (last modified, word count)
+                               → Completeness heuristics (section detection, word count)
+                               → Template matching engine (structure inference)
+                               NOTE: The "AI completion draft" feature DOES need an LLM.
+                                     Completeness scoring + draft detection = code only.
+
+21  Staleness Monitor          Google Drive API / Notion API (watch for changes)
+                               → Webhook / polling engine
+                               → Link extractor (finds referenced sources in docs)
+                               → Diff checker (detects source changes)
+                               → Email / push notification service
+
+22  Document Analytics         Custom event tracking SDK (like Segment / Mixpanel)
+                               → Read-event pixel (tracks opens, section time)
+                               → Scroll-depth tracker (JS IntersectionObserver)
+                               → Heat map renderer (Canvas API or heatmap.js)
+                               → Time-on-section timer (requestAnimationFrame)
+
+23  Confidence Scorer          Rule-based citation extraction (regex + NLP patterns)
+    & Trust Shield             → YARA rules / malware signature scanner (file scan)
+                               → VirusTotal API (malicious content check)
+                               → Trust score calculator (weighted rule engine)
+
+──────────────────────────────────────────────────────────────────────────────
+TOTAL TOOLS — CODE + LIBS ONLY: 9
+(Document Resurrector's scoring = code; its completion draft = LLM)
+──────────────────────────────────────────────────────────────────────────────
+
+
+================================================================================
+SECTION D — QUICK REFERENCE MATRIX
+================================================================================
+
+TOOL NAME                       CATEGORY            TYPE
+──────────────────────────────────────────────────────────────────────────────
+AI Detector                     Writing & Language   AI MODEL
+Humanizer                       Writing & Language   AI MODEL
+Grammar Fix                     Writing & Language   AI MODEL
+AI Summarizer                   Writing & Language   AI MODEL
+Plagiarism Check                Writing & Language   CODE + LIBS
+Citation Generator              Writing & Language   CODE + LIBS
+──────────────────────────────────────────────────────────────────────────────
+Doc Editor                      Document Creation    CODE + LIBS
+Doc Studio                      Document Creation    AI MODEL
+Voice to Doc                    Document Creation    AI MODEL
+Smart Notes                     Document Creation    AI MODEL
+Adaptive Document               Document Creation    AI MODEL
+──────────────────────────────────────────────────────────────────────────────
+Multi-Source Intelligence       Intelligence         AI MODEL
+Exam Paper Builder              Intelligence         AI MODEL
+Narrative Report Writer         Intelligence         AI MODEL
+Contract Negotiation Coach      Intelligence         AI MODEL
+──────────────────────────────────────────────────────────────────────────────
+File Converter (49 sub-tools)   Processing           CODE + LIBS
+Smart Form Extractor            Processing           AI MODEL (OCR + ML)
+Document Version Reconciler     Processing           CODE + LIBS
+Document Archaeology            Processing           CODE + LIBS
+Document Resurrector            Processing           CODE + LIBS *
+──────────────────────────────────────────────────────────────────────────────
+Staleness Monitor               Monitoring           CODE + LIBS
+Document Analytics              Monitoring           CODE + LIBS
+Confidence Scorer & Trust Shield Monitoring          CODE + LIBS
+Knowledge Interview Bot         Monitoring           AI MODEL
+──────────────────────────────────────────────────────────────────────────────
+
+* Document Resurrector: completeness scoring = code only.
+  The completion draft generation feature = needs LLM.
+
+
+================================================================================
+SECTION E — FILE CONVERTER FULL SUB-TOOL LIST (49 sub-tools)
+================================================================================
+
+PDF TOOLS (18)
+  1.  Merge PDF
+  2.  Split PDF
+  3.  Compress PDF
+  4.  Organize PDF
+  5.  Rotate PDF
+  6.  Repair PDF
+  7.  Protect PDF
+  8.  Unlock PDF
+  9.  Watermark PDF
+  10. Add Page Numbers
+  11. Crop PDF
+  12. Sign PDF
+  13. Redact PDF
+  14. Compare PDF
+  15. Edit PDF
+  16. Scan to PDF
+  17. OCR PDF
+  18. PDF to PDF/A
+
+PDF TO OTHER FORMATS (5)
+  19. PDF to Word
+  20. PDF to PowerPoint
+  21. PDF to Excel
+  22. PDF to JPG
+  23. PDF to TXT
+
+OTHER FORMATS TO PDF (6)
+  24. Word to PDF
+  25. PowerPoint to PDF
+  26. Excel to PDF
+  27. Image to PDF
+  28. HTML to PDF
+  29. TXT to PDF
+
+OFFICE CONVERSIONS (10)
+  30. Word to PowerPoint
+  31. Word to Excel
+  32. Excel to Word
+  33. PowerPoint to Word
+  34. Excel to CSV
+  35. CSV to Excel
+  36. Markdown to PDF
+  37. Markdown to Word
+  38. JSON to Excel
+  39. HTML to Word
+
+IMAGE CONVERSIONS (6)
+  40. JPG to PDF
+  41. PNG to PDF
+  42. JPG to PNG
+  43. PNG to JPG
+  44. WEBP to JPG
+  45. JPG to WEBP
+
+AUDIO & VIDEO (2)
+  46. MP4 to MP3
+  47. Video to Text
+
+AI-POWERED CONVERSIONS (2)
+  48. AI Summarizer (doc/URL)
+  49. Translate PDF
+
+
+================================================================================
+END OF DOCUMENT
+Veriscribe — Full Tools & Subtools Breakdown
+================================================================================
