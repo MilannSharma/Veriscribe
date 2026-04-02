@@ -5,3 +5,8 @@ build/
 .vscode/
 MDs/
 Doc/
+modules/
+.DS_Store
+*.log
+coverage/
+.idea/
