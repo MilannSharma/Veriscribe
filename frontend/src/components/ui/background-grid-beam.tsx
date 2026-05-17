@@ -10,7 +10,9 @@ export const GridBeam: React.FC<{ children: React.ReactNode; className?: string 
   children,
   className
 }) => (
-  <div className={cn('relative w-full h-full bg-grid', className)}>
+  // Use the existing `.bg-grid-theme` styles defined in cinematic-landing-hero
+  // to ensure the grid background is applied where `GridBeam` is used.
+  <div className={cn('relative w-full h-full bg-grid-theme', className)}>
     <Beam />
     {children}
   </div>

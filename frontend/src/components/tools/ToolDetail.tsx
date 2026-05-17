@@ -1,3 +1,4 @@
+import React from "react";
 import { useParams, Link } from "react-router-dom";
 import { categories, Tool, Category } from "@/src/data/tools";
 import { 
@@ -29,7 +30,13 @@ import {
   BarChart3,
   Scale,
   ClipboardCheck,
-  GitCompare
+  GitCompare,
+  FileUp,
+  Download,
+  Clipboard,
+  ExternalLink,
+  Globe,
+  Link2
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/src/lib/utils";
@@ -100,34 +107,34 @@ export const ToolDetail = () => {
   const getToolSteps = (id: string) => {
     const allSteps: Record<string, any[]> = {
       'ai-detector': [
-        { title: "Upload or Paste", desc: "Add text or upload any document", icon: "⬆️" },
-        { title: "8 Models Analyze", desc: "All detection models run in parallel", icon: "🧠" },
-        { title: "Get Full Report", desc: "See AI%, paragraph breakdown, and model results", icon: "📊" }
+        { title: "Upload or Paste", desc: "Add text or upload any document", icon: FileUp },
+        { title: "8 Models Analyze", desc: "All detection models run in parallel", icon: Brain },
+        { title: "Get Full Report", desc: "See AI%, paragraph breakdown, and model results", icon: BarChart3 }
       ],
       'humanizer': [
-        { title: "Upload or Paste", desc: "Add your AI-generated content", icon: "⬆️" },
-        { title: "AI Rewrites", desc: "Chosen intensity applied, voice preserved", icon: "✍️" },
-        { title: "Passes Detectors", desc: "Download or send to Doc Editor", icon: "✅" }
+        { title: "Upload or Paste", desc: "Add your AI-generated content", icon: FileUp },
+        { title: "AI Rewrites", desc: "Chosen intensity applied, voice preserved", icon: Type },
+        { title: "Passes Detectors", desc: "Download or send to Doc Editor", icon: CheckCircle2 }
       ],
       'grammar-fix': [
-        { title: "Paste Your Text", desc: "Add any document or text", icon: "⬆️" },
-        { title: "AI Fixes & Suggests", desc: "Grammar, style, tone, and flow improved", icon: "✅" },
-        { title: "Accept & Export", desc: "Review suggestions, accept all, download", icon: "📥" }
+        { title: "Paste Your Text", desc: "Add any document or text", icon: FileUp },
+        { title: "AI Fixes & Suggests", desc: "Grammar, style, tone, and flow improved", icon: CheckCircle2 },
+        { title: "Accept & Export", desc: "Review suggestions, accept all, download", icon: Download }
       ],
       'ai-summarizer': [
-        { title: "Add Content", desc: "Paste text, upload a file, or enter a URL", icon: "⬆️" },
-        { title: "AI Condenses", desc: "Extracts key points and entities", icon: "📋" },
-        { title: "Get Your Summary", desc: "Download in DOCX, PDF, or TXT", icon: "📤" }
+        { title: "Add Content", desc: "Paste text, upload a file, or enter a URL", icon: FileUp },
+        { title: "AI Condenses", desc: "Extracts key points and entities", icon: Clipboard },
+        { title: "Get Your Summary", desc: "Download in DOCX, PDF, or TXT", icon: ExternalLink }
       ],
       'plagiarism-check': [
-        { title: "Upload or Paste", desc: "Add the text you want to check", icon: "⬆️" },
-        { title: "Deep Web Scan", desc: "Billions of sources scanned in seconds", icon: "🌐" },
-        { title: "Originality Report", desc: "See matched sources, percentages, highlights", icon: "📄" }
+        { title: "Upload or Paste", desc: "Add the text you want to check", icon: FileUp },
+        { title: "Deep Web Scan", desc: "Billions of sources scanned in seconds", icon: Globe },
+        { title: "Originality Report", desc: "See matched sources, percentages, highlights", icon: FileText }
       ],
       'citation-generator': [
-        { title: "Enter Source", desc: "Paste URL, DOI, ISBN, or fill manually", icon: "🔗" },
-        { title: "AI Fetches Data", desc: "Title, author, date, publisher auto-filled", icon: "🤖" },
-        { title: "Get Citation", desc: "Format in any style, copy or export", icon: "📚" }
+        { title: "Enter Source", desc: "Paste URL, DOI, ISBN, or fill manually", icon: Link2 },
+        { title: "AI Fetches Data", desc: "Title, author, date, publisher auto-filled", icon: Bot },
+        { title: "Get Citation", desc: "Format in any style, copy or export", icon: BookOpen }
       ]
     };
     return allSteps[id] || [
@@ -139,6 +146,31 @@ export const ToolDetail = () => {
 
   const writingTools = ['ai-detector', 'humanizer', 'grammar-fix', 'ai-summarizer', 'plagiarism-check', 'citation-generator'];
   const isWritingTool = writingTools.includes(currentTool.id);
+
+  const getToolFeatures = (id: string) => {
+    const allFeatures: Record<string, any[]> = {
+      'ai-detector': [
+        { title: "Forensic Analysis", desc: "Runs 8+ independent models to find AI patterns.", icon: Search },
+        { title: "Plagiarism Shield", desc: "Cross-checks against billions of academic sources.", icon: Shield },
+        { title: "Real-time Scoring", desc: "Get probability results in under 5 seconds.", icon: Zap }
+      ],
+      'humanizer': [
+        { title: "Voice Preservation", desc: "Maintains your unique writing style and tone.", icon: UserRound },
+        { title: "Detector Bypass", desc: "Specifically tuned to pass GPTZero and Turnitin.", icon: Shield },
+        { title: "Natural Flow", desc: "Improves sentence variance for a human feel.", icon: Sparkles }
+      ],
+      'grammar-fix': [
+        { title: "Contextual Edits", desc: "Goes beyond spelling to fix complex syntax.", icon: CheckCircle2 },
+        { title: "Style Enhancer", desc: "Polishes your prose for professional impact.", icon: Sparkles },
+        { title: "Clarity Focus", desc: "Identifies and simplifies wordy sentences.", icon: Zap }
+      ]
+    };
+    return allFeatures[id] || [
+      { title: "AI Powered", desc: "State-of-the-art processing for every document.", icon: Brain },
+      { title: "Fast & Secure", desc: "Enterprise-grade encryption for all your data.", icon: Shield },
+      { title: "Easy Export", desc: "Download in any major file format instantly.", icon: FileUp }
+    ];
+  };
 
   const features = [
     { title: "Forensic Accuracy", desc: "Deep analysis powered by 8+ specialized AI models.", icon: <ShieldCheck className="w-5 h-5" /> },
@@ -153,12 +185,20 @@ export const ToolDetail = () => {
     { title: "HR Teams", desc: "Screen documents and verify authenticity instantly.", icon: <Users className="w-5 h-5" /> }
   ];
 
+  const id = React.useId().replace(/:/g, "");
+
   return (
     <motion.div 
+        id={`detail-${id}`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
     >
+      <style>{`
+        #detail-${id} {
+          --tool-color: ${currentCategory.color};
+        }
+      `}</style>
       {/* Hero Section */}
       <ToolHero 
         categoryName={currentCategory.name}
@@ -167,6 +207,8 @@ export const ToolDetail = () => {
         tagline={currentTool.tagline}
         description={getToolDescription(currentTool.id)}
         icon={currentTool.icon}
+        features={getToolFeatures(currentTool.id)}
+        toolId={currentTool.id}
         onPrimaryAction={() => {
           const workspace = document.getElementById('workspace');
           if (workspace) workspace.scrollIntoView({ behavior: 'smooth' });
@@ -244,8 +286,7 @@ export const ToolDetail = () => {
             const workspace = document.getElementById('workspace');
             if (workspace) workspace.scrollIntoView({ behavior: 'smooth' });
           }}
-          className="px-12 py-5 rounded-2xl text-white font-bold text-lg hover:brightness-110 transition-all shadow-2xl uppercase tracking-widest"
-          style={{ backgroundColor: currentCategory.color }}
+          className="px-12 py-5 rounded-2xl text-white font-bold text-lg hover:brightness-110 transition-all shadow-2xl uppercase tracking-widest bg-[var(--tool-color)]"
         >
           Get Started
         </button>
@@ -265,7 +306,7 @@ export const ToolDetail = () => {
                 <Link to={tool.route} className="group block p-8 rounded-[24px] bg-white/5 border border-white/10 hover:border-white/20 transition-all h-full backdrop-blur-sm">
                     <div className="flex items-center gap-4 mb-4">
                         <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <tool.icon className="w-6 h-6" style={{ color: currentCategory?.color }} />
+                        <tool.icon className="w-6 h-6 text-[var(--tool-color)]" />
                         </div>
                         <h3 className="font-bold text-white">{tool.name}</h3>
                     </div>

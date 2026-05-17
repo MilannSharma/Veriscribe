@@ -1,8 +1,14 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/src/lib/utils';
-import { LucideIcon, ChevronRight, ArrowRight, Play, Mic, Layers, Share2, Activity } from 'lucide-react';
+import { LucideIcon, ChevronRight, ArrowRight, Star, Sparkles, Shield, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
+
+export interface FeatureSlide {
+  title: string;
+  description: string;
+  icon: LucideIcon;
+}
 
 interface ToolHeroProps {
   categoryName: string;
@@ -11,9 +17,9 @@ interface ToolHeroProps {
   tagline: string;
   description: string;
   icon: LucideIcon | string;
+  features?: FeatureSlide[];
   onPrimaryAction?: () => void;
   onSecondaryAction?: () => void;
-  isCompact?: boolean;
   toolId?: string;
 }
 
@@ -24,252 +30,206 @@ export const ToolHero: React.FC<ToolHeroProps> = ({
   tagline,
   description,
   icon: Icon,
+  features = [],
   onPrimaryAction,
   onSecondaryAction,
-  isCompact = false,
-  toolId
 }) => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    if (features.length <= 1) return;
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % features.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [features]);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
+      transition: { staggerChildren: 0.1, delayChildren: 0.2 }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as any }
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }
     }
   };
 
-  // Special Visuals for Part 6
-  const renderSpecialVisual = () => {
-    if (toolId === 'voice-to-doc') {
-      return (
-        <motion.div variants={itemVariants} className="mt-8 flex items-center justify-center gap-1 h-8">
-          {[...Array(12)].map((_, i) => (
-            <motion.div
-              key={i}
-              animate={{ height: [8, 24, 12, 32, 8] }}
-              transition={{ repeat: Infinity, duration: 1.5, delay: i * 0.1 }}
-              className="w-1 rounded-full"
-              style={{ backgroundColor: categoryColor }}
-            />
-          ))}
-          <span className="ml-4 text-xs font-bold uppercase tracking-widest animate-pulse" style={{ color: categoryColor }}>
-            Listening...
-          </span>
-        </motion.div>
-      );
-    }
-    if (toolId === 'adaptive-document') {
-      return (
-        <motion.div variants={itemVariants} className="mt-8 flex items-center justify-center gap-4">
-          {['Expert', 'Executive', 'Student'].map((v, i) => (
-            <div key={v} className={cn(
-              "px-3 py-1 rounded-full text-[10px] font-bold border transition-all duration-300",
-              i === 0 ? "bg-white border-violet-200 shadow-sm" : "bg-transparent border-transparent opacity-40"
-            )}
-            style={i === 0 ? { color: categoryColor, borderColor: `${categoryColor}40` } : {}}
-            >
-              {v}
-            </div>
-          ))}
-        </motion.div>
-      );
-    }
-    if (toolId === 'multi-source-intelligence') {
-      return (
-        <motion.div variants={itemVariants} className="mt-8 relative h-12 w-full max-w-[200px] mx-auto">
-          {[...Array(4)].map((_, i) => (
-            <motion.div
-              key={i}
-              animate={{ 
-                x: [0, (i % 2 === 0 ? 40 : -40), 0],
-                y: [0, (i < 2 ? 20 : -20), 0],
-                scale: [1, 1.2, 1]
-              }}
-              transition={{ repeat: Infinity, duration: 4, delay: i * 0.5 }}
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-white border border-[#E2E8F0] shadow-sm flex items-center justify-center"
-            >
-              <Activity className="w-4 h-4" style={{ color: categoryColor }} />
-            </motion.div>
-          ))}
-        </motion.div>
-      );
-    }
-    return null;
-  };
-
-  if (isCompact) {
-    return (
-      <section className="relative pt-[120px] pb-[60px] overflow-hidden">
-        {/* Solid Category Color Background (5% opacity) */}
-        <div className="absolute inset-0 z-0" style={{ backgroundColor: `${categoryColor}08` }} />
-        
-        <div className="max-w-[1200px] mx-auto px-6 relative z-10">
-          <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="flex flex-col md:flex-row items-center justify-between gap-8"
-          >
-            <div className="flex-1 text-center md:text-left">
-              <motion.div variants={itemVariants} className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest mb-4 justify-center md:justify-start">
-                <Link to="/" className="text-white/40 hover:text-white transition-colors">Home</Link>
-                <ChevronRight className="w-3 h-3 text-white/20" />
-                <span style={{ color: categoryColor }}>{categoryName}</span>
-              </motion.div>
-              
-              <motion.div variants={itemVariants} className="flex items-center gap-4 mb-4 justify-center md:justify-start">
-                <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shadow-sm">
-                  {typeof Icon === 'string' ? (
-                    <span className="text-2xl">{Icon}</span>
-                  ) : (
-                    <Icon className="w-6 h-6" style={{ color: categoryColor }} />
-                  )}
-                </div>
-                <h1 className="text-[32px] md:text-[40px] font-bold text-white leading-tight font-display">
-                  {toolName}
-                </h1>
-              </motion.div>
-              
-              <motion.p variants={itemVariants} className="text-[16px] text-white/40 max-w-[600px]">
-                {tagline}
-              </motion.p>
-            </div>
-
-            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-3">
-              <button 
-                onClick={onPrimaryAction}
-                className="px-8 py-3 rounded-[10px] text-white font-bold text-sm hover:brightness-110 transition-all shadow-lg"
-                style={{ backgroundColor: categoryColor, boxShadow: `0 8px 20px ${categoryColor}30` }}
-              >
-                Get Started
-              </button>
-              <button 
-                onClick={onSecondaryAction}
-                className="px-8 py-3 rounded-[10px] bg-white/5 border border-white/10 text-white/60 font-bold text-sm hover:bg-white/10 transition-all"
-              >
-                How It Works
-              </button>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-    );
-  }
+  const id = React.useId().replace(/:/g, "");
 
   return (
-    <section className="relative pt-[140px] pb-[100px] overflow-hidden">
-      {/* Animated Background Orbs */}
+    <section 
+      id={`hero-${id}`}
+      className="relative pt-[180px] pb-[120px] overflow-hidden min-h-[90vh] flex items-center justify-center bg-[#050505]"
+    >
+      <style>{`
+        #hero-${id} {
+          --tool-color: ${categoryColor};
+        }
+        .hero-mask-text {
+          mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+          -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+        }
+      `}</style>
+      {/* 1. Cinematic Background Elements */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <motion.div 
-          animate={{ 
-            x: [0, 40, 0], 
-            y: [0, -40, 0],
-            scale: [1, 1.1, 1]
-          }}
-          transition={{ repeat: Infinity, duration: 15, ease: "linear" }}
-          className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full blur-[120px] opacity-[0.15]"
-          style={{ backgroundColor: categoryColor }}
-        />
-        <motion.div 
-          animate={{ 
-            x: [0, -40, 0], 
-            y: [0, 40, 0],
-            scale: [1, 1.2, 1]
-          }}
-          transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
-          className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full blur-[120px] opacity-[0.15]"
-          style={{ backgroundColor: categoryColor }}
-        />
-      </div>
-
-      <div className="max-w-[900px] mx-auto px-6 relative z-10 text-center">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="flex flex-col items-center"
-        >
-          {/* Category Badge */}
-          <motion.div 
-            variants={itemVariants}
-            className="px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] mb-8 inline-flex items-center gap-2"
-            style={{ backgroundColor: `${categoryColor}15`, color: categoryColor, border: `1px solid ${categoryColor}30` }}
-          >
-            <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: categoryColor }} />
-            {categoryName}
-          </motion.div>
-
-          {/* Tool Icon */}
-          <motion.div 
-            variants={itemVariants}
-            className="w-20 h-20 rounded-[24px] bg-white/5 border border-white/10 flex items-center justify-center mb-8 shadow-[0_10px_30px_rgba(0,0,0,0.2)] relative group"
-          >
-            <div className="absolute inset-0 blur-2xl opacity-20 group-hover:opacity-40 transition-opacity rounded-full" style={{ backgroundColor: categoryColor }} />
-            {typeof Icon === 'string' ? (
-              <span className="text-[52px] leading-none relative z-10">{Icon}</span>
-            ) : (
-              <Icon className="w-10 h-10 relative z-10" style={{ color: categoryColor }} />
-            )}
-          </motion.div>
-
-          {/* Tool Name */}
+        {/* Massive Background Text with Gradient Mask */}
+        <div className="absolute inset-0 flex items-center justify-center">
           <motion.h1 
-            variants={itemVariants}
-            className="text-[40px] md:text-[56px] font-bold text-white leading-[1.1] tracking-tight mb-6 font-display"
+            initial={{ opacity: 0, scale: 0.9, y: 50 }}
+            animate={{ opacity: 0.05, scale: 1, y: 0 }}
+            transition={{ duration: 2, ease: "easeOut" }}
+            className="text-[25vw] font-black uppercase tracking-tighter whitespace-nowrap select-none text-white pointer-events-none blur-[2px] hero-mask-text"
           >
             {toolName}
           </motion.h1>
+        </div>
 
-          {/* Tagline */}
-          <motion.p 
-            variants={itemVariants}
-            className="text-[18px] md:text-[22px] font-medium text-white/60 mb-4"
-          >
-            {tagline}
-          </motion.p>
+        {/* Dynamic Animated Orbs */}
+        <motion.div 
+          animate={{ x: [0, 150, 0], y: [0, -100, 0], scale: [1, 1.2, 1] }}
+          transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
+          className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full blur-[150px] opacity-[0.15] bg-[var(--tool-color)]"
+        />
+        <motion.div 
+          animate={{ x: [0, -150, 0], y: [0, 100, 0], scale: [1, 1.3, 1] }}
+          transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
+          className="absolute bottom-[-10%] left-[-10%] w-[60%] h-[60%] rounded-full blur-[180px] opacity-[0.1] bg-[var(--tool-color)]"
+        />
+      </div>
 
-          {/* Short Description */}
-          <motion.p 
-            variants={itemVariants}
-            className="text-[16px] md:text-[17px] text-white/40 leading-[1.7] max-w-[700px] mb-10"
+      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
+        <div className="grid lg:grid-cols-2 gap-16 md:gap-24 items-center">
+          
+          {/* LEFT CONTENT: Tool Identity */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="text-left"
           >
-            {description}
-          </motion.p>
+            <motion.div variants={itemVariants} className="flex items-center gap-3 mb-10">
+              <span 
+                className="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.3em] border backdrop-blur-md bg-[color-mix(in_srgb,var(--tool-color)_15%,transparent)] text-[var(--tool-color)] border-[color-mix(in_srgb,var(--tool-color)_30%,transparent)]" 
+              >
+                {categoryName}
+              </span>
+              <div className="h-px w-12 bg-white/10" />
+              <Link to="/" className="text-[10px] font-bold text-white/30 hover:text-white uppercase tracking-[0.2em] transition-colors">Veriscribe</Link>
+            </motion.div>
 
-          {/* CTA Buttons */}
-          <motion.div 
-            variants={itemVariants}
-            className="flex flex-col sm:flex-row items-center gap-4"
-          >
-            <button 
-              onClick={onPrimaryAction}
-              className="w-full sm:w-auto px-10 py-4 rounded-[12px] text-white font-bold text-sm uppercase tracking-widest transition-all duration-200 hover:brightness-110 hover:scale-[1.02] shadow-xl"
-              style={{ backgroundColor: categoryColor, boxShadow: `0 10px 30px ${categoryColor}40` }}
-            >
-              Get Started
-            </button>
-            <button 
-              onClick={onSecondaryAction}
-              className="w-full sm:w-auto px-10 py-4 rounded-[12px] bg-white/5 border border-white/10 text-white/60 font-bold text-sm uppercase tracking-widest transition-all duration-200 hover:bg-white/10 hover:border-white/20"
-            >
-              How It Works
-            </button>
+            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row sm:items-center gap-8 mb-10">
+              <div className="w-24 h-24 rounded-[32px] bg-white/5 border border-white/10 flex items-center justify-center relative group shrink-0">
+                <div className="absolute inset-0 blur-3xl opacity-20 group-hover:opacity-50 transition-opacity duration-700 bg-[var(--tool-color)]" />
+                {typeof Icon === 'string' ? (
+                  <span className="text-5xl relative z-10">{Icon}</span>
+                ) : (
+                  <Icon className="w-12 h-12 relative z-10 text-[var(--tool-color)]" />
+                )}
+              </div>
+              <div className="space-y-3">
+                <h1 className="text-[64px] md:text-[84px] font-black text-silver-matte leading-[0.85] tracking-tighter font-display">
+                  {toolName}
+                </h1>
+                <p className="text-xl md:text-2xl font-medium text-white/70 tracking-tight">{tagline}</p>
+              </div>
+            </motion.div>
+
+            <motion.p variants={itemVariants} className="text-lg md:text-xl text-white/40 leading-relaxed max-w-xl mb-12">
+              {description}
+            </motion.p>
+
+            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center gap-5">
+              <button 
+                onClick={onPrimaryAction}
+                className="w-full sm:w-auto px-12 py-6 rounded-[20px] text-white font-bold text-sm uppercase tracking-[0.25em] transition-all duration-500 hover:brightness-110 hover:scale-[1.02] shadow-2xl group flex items-center justify-center gap-4 overflow-hidden relative bg-[var(--tool-color)] shadow-[0_30px_60px_-12px_color-mix(in_srgb,var(--tool-color)_40%,transparent)]"
+              >
+                <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                <span className="relative z-10">Launch Workspace</span>
+                <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1.5 transition-transform" />
+              </button>
+              <button 
+                onClick={onSecondaryAction}
+                className="w-full sm:w-auto px-10 py-6 rounded-[20px] bg-white/5 border border-white/10 text-white/60 font-bold text-sm uppercase tracking-widest transition-all duration-300 hover:bg-white/10 hover:text-white flex items-center justify-center gap-3 backdrop-blur-sm"
+              >
+                Core Features
+              </button>
+            </motion.div>
           </motion.div>
 
-          {/* Special Visuals */}
-          {renderSpecialVisual()}
-        </motion.div>
+          {/* RIGHT CONTENT: Feature Slideshow Card */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9, rotateY: -10 }}
+            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+            transition={{ duration: 1.2, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="relative hidden lg:block perspective-1000"
+          >
+            <div className="relative w-full aspect-[4/3] rounded-[48px] bg-[#0A0A0B] border border-white/10 p-16 overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.7)] group">
+              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.05] via-transparent to-transparent pointer-events-none" />
+              
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentSlide}
+                  initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  exit={{ opacity: 0, y: -30, filter: 'blur(10px)' }}
+                  transition={{ duration: 0.8, ease: "circOut" }}
+                  className="h-full flex flex-col justify-center"
+                >
+                  <div className="w-20 h-20 rounded-3xl bg-white/5 flex items-center justify-center mb-10 border border-white/10 shadow-inner group-hover:scale-110 transition-transform duration-700">
+                    {features[currentSlide] ? (
+                      React.createElement(features[currentSlide].icon, { 
+                        className: "w-10 h-10", 
+                        style: { color: categoryColor } 
+                      })
+                    ) : (
+                      <Sparkles className="w-10 h-10 text-white/20" />
+                    )}
+                  </div>
+                  
+                  <h3 className="text-4xl font-bold text-white mb-6 tracking-tight leading-tight">
+                    {features[currentSlide]?.title || "Premium Features"}
+                  </h3>
+                  <p className="text-xl text-white/40 leading-relaxed max-w-md line-clamp-3">
+                    {features[currentSlide]?.description || "Experience state-of-the-art AI processing with Veriscribe."}
+                  </p>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Slide Indicators - Premium Style */}
+              <div className="absolute bottom-16 left-16 flex items-center gap-4">
+                {features.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCurrentSlide(i)}
+                    aria-label={`Go to slide ${i + 1}`}
+                    className="relative group py-2"
+                  >
+                    <div className={cn(
+                      "h-1 rounded-full transition-all duration-700 ease-out",
+                      i === currentSlide ? "w-12 bg-[var(--tool-color)]" : "w-4 bg-white/10 group-hover:bg-white/20"
+                    )}
+                    />
+                  </button>
+                ))}
+              </div>
+
+              {/* Holographic Overlays */}
+              <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_100%_0%,rgba(255,255,255,0.03),transparent_50%)] pointer-events-none" />
+            </div>
+
+            {/* Decorative Premium Ornaments */}
+            <div className="absolute -top-10 -right-10 w-40 h-40 rounded-[3rem] bg-gradient-to-br from-white/10 to-transparent border border-white/10 backdrop-blur-2xl animate-float-slow z-[-1]" />
+            <div className="absolute -bottom-12 -left-12 w-32 h-32 rounded-full bg-gradient-to-tr from-white/5 to-transparent border border-white/5 backdrop-blur-xl animate-float z-[-1]" />
+          </motion.div>
+
+        </div>
       </div>
     </section>
   );

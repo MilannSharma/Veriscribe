@@ -47,12 +47,12 @@ export const VoiceToDoc: React.FC = () => {
             { title: "Multi-Language", desc: "Support for 50+ languages and accents.", icon: <Mic className="w-5 h-5" /> }
           ].map((f, i) => (
             <ScrollReveal key={i} delay={i * 100}>
-              <GlowCard className="p-8 bg-white/5 border border-white/10 rounded-[24px] h-full shadow-2xl backdrop-blur-sm group hover:border-white/20 transition-all">
-                <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-6 text-white group-hover:scale-110 group-hover:bg-white/10 transition-all">
+              <GlowCard className="p-8 bg-white/5 border border-white/10 rounded-[24px] h-full shadow-2xl backdrop-blur-sm">
+                <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-6 text-white">
                   {f.icon}
                 </div>
-                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-violet-400 transition-colors">{f.title}</h3>
-                <p className="text-white/40 leading-relaxed group-hover:text-white/60 transition-colors">{f.desc}</p>
+                <h3 className="text-xl font-bold text-white mb-3">{f.title}</h3>
+                <p className="text-white/40 leading-relaxed">{f.desc}</p>
               </GlowCard>
             </ScrollReveal>
           ))}

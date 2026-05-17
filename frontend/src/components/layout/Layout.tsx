@@ -4,6 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 import { GlassFilter } from "@/src/components/ui/liquid-glass";
+import { AuthModal } from "@/src/components/auth/AuthModal";
+import { useState } from "react";
+import { isLoggedIn } from "@/src/lib/auth";
+import Lenis from "@studio-freight/lenis";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const AmbientOrbs = () => (
   <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
@@ -39,24 +45,95 @@ const AmbientOrbs = () => (
 
 export const Layout = ({ children }: { children: ReactNode }) => {
   const { pathname } = useLocation();
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isLocked, setIsLocked] = useState(false);
+
+  useEffect(() => {
+    const checkAuth = () => {
+      const isToolRoute = pathname.startsWith('/tools');
+      const loggedIn = isLoggedIn();
+      
+      if (isToolRoute && !loggedIn) {
+        setIsLocked(true);
+        setIsAuthModalOpen(true);
+      } else {
+        setIsLocked(false);
+        if (isToolRoute && loggedIn) {
+          setIsAuthModalOpen(false);
+        }
+      }
+    };
+
+    checkAuth();
+
+    window.addEventListener('veriscribe_auth_change', checkAuth);
+    return () => {
+      window.removeEventListener('veriscribe_auth_change', checkAuth);
+    };
+  }, [pathname]);
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.4,
+      easing: (t) => 1 - Math.pow(1 - t, 4), // ultra-smooth quartic out deceleration
+      orientation: "vertical",
+      gestureOrientation: "vertical",
+      smoothWheel: true,
+      wheelMultiplier: 0.95,
+      touchMultiplier: 1.8,
+    });
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    // Sync ScrollTrigger with Lenis
+    lenis.on("scroll", ScrollTrigger.update);
+
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+
+    gsap.ticker.lagSmoothing(0);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    
+    // Handle hash scroll after page change
+    if (window.location.hash) {
+      setTimeout(() => {
+        const id = window.location.hash.replace('#', '');
+        const element = document.getElementById(id);
+        if (element) element.scrollIntoView({ behavior: 'smooth' });
+      }, 500); // Wait for page transition and rendering
+    }
   }, [pathname]);
 
   return (
     <div className="min-h-screen bg-[#0a0a0b] text-[#f1f5f9] selection:bg-violet-500/30 overflow-x-hidden">
       <AmbientOrbs />
       <GlassFilter />
-      <Navbar />
+      <Navbar onSignIn={() => {
+        setIsLocked(false);
+        setIsAuthModalOpen(true);
+      }} />
+      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} isLocked={isLocked} />
       <main className="relative z-10">
         <AnimatePresence mode="wait">
           <motion.div
             key={pathname}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0, y: 15, filter: "blur(4px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: -15, filter: "blur(4px)" }}
+            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
           >
             {children}
           </motion.div>
