@@ -8,21 +8,26 @@ export const Footer = () => {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
         {/* Col 1: Logo & Social */}
         <div className="space-y-6">
-          <Link to="/" className="text-2xl font-bold tracking-tighter text-white font-display">Veriscribe</Link>
+          <Link to="/" className="flex items-center gap-3">
+            <div className="w-10 h-10 flex items-center justify-center">
+              <img src="/images/veriscribe-logo.png" alt="Veriscribe Logo" className="w-full h-full object-contain" />
+            </div>
+            <span className="text-2xl font-bold tracking-tighter text-white font-display">Veriscribe</span>
+          </Link>
           <p className="text-white/40 text-sm leading-relaxed">
             The only AI writing suite that detects, humanizes, formats, and perfects — all in one intelligent workspace.
           </p>
           <div className="flex items-center gap-4">
-            <a href="#" className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
+            <a href="#" aria-label="Follow us on Twitter" className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
               <Twitter className="w-5 h-5 text-white/60" />
             </a>
-            <a href="#" className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
+            <a href="#" aria-label="Visit our GitHub" className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
               <Github className="w-5 h-5 text-white/60" />
             </a>
-            <a href="#" className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
+            <a href="#" aria-label="Connect on LinkedIn" className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
               <Linkedin className="w-5 h-5 text-white/60" />
             </a>
-            <a href="#" className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
+            <a href="#" aria-label="Email us" className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
               <Mail className="w-5 h-5 text-white/60" />
             </a>
           </div>
@@ -52,9 +57,9 @@ export const Footer = () => {
           <h4 className="text-sm font-bold uppercase tracking-widest text-white/80">Company</h4>
           <ul className="space-y-4">
             <li><Link to="/about" className="text-sm text-white/40 hover:text-white transition-colors">About Us</Link></li>
-            <li><a href="#" className="text-sm text-white/40 hover:text-white transition-colors">Blog</a></li>
-            <li><a href="#" className="text-sm text-white/40 hover:text-white transition-colors">Careers</a></li>
-            <li><a href="#" className="text-sm text-white/40 hover:text-white transition-colors">Contact</a></li>
+            <li><Link to="/blog" className="text-sm text-white/40 hover:text-white transition-colors">Blog</Link></li>
+            <li><Link to="/careers" className="text-sm text-white/40 hover:text-white transition-colors">Careers</Link></li>
+            <li><Link to="/contact" className="text-sm text-white/40 hover:text-white transition-colors">Contact</Link></li>
           </ul>
         </div>
 
@@ -62,9 +67,9 @@ export const Footer = () => {
         <div className="space-y-6">
           <h4 className="text-sm font-bold uppercase tracking-widest text-white/80">Legal</h4>
           <ul className="space-y-4">
-            <li><a href="#" className="text-sm text-white/40 hover:text-white transition-colors">Privacy Policy</a></li>
-            <li><a href="#" className="text-sm text-white/40 hover:text-white transition-colors">Terms of Service</a></li>
-            <li><a href="#" className="text-sm text-white/40 hover:text-white transition-colors">Cookie Policy</a></li>
+            <li><Link to="/privacy" className="text-sm text-white/40 hover:text-white transition-colors">Privacy Policy</Link></li>
+            <li><Link to="/terms" className="text-sm text-white/40 hover:text-white transition-colors">Terms of Service</Link></li>
+            <li><Link to="/cookies" className="text-sm text-white/40 hover:text-white transition-colors">Cookie Policy</Link></li>
           </ul>
         </div>
       </div>

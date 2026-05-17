@@ -3,11 +3,12 @@ import React, { useEffect, useRef, ReactNode } from 'react';
 interface GlowCardProps {
   children: ReactNode;
   className?: string;
-  glowColor?: 'blue' | 'purple' | 'green' | 'red' | 'orange';
+  glowColor?: 'blue' | 'purple' | 'green' | 'red' | 'orange' | 'violet' | 'emerald' | 'fuchsia';
   size?: 'sm' | 'md' | 'lg';
   width?: string | number;
   height?: string | number;
   customSize?: boolean; // When true, ignores size prop and uses width/height or className
+  radius?: number; // Corner radius in pixels
 }
 
 const glowColorMap = {
@@ -15,7 +16,10 @@ const glowColorMap = {
   purple: { base: 280, spread: 300 },
   green: { base: 120, spread: 200 },
   red: { base: 0, spread: 200 },
-  orange: { base: 30, spread: 200 }
+  orange: { base: 30, spread: 200 },
+  violet: { base: 275, spread: 280 },
+  emerald: { base: 150, spread: 200 },
+  fuchsia: { base: 320, spread: 200 }
 };
 
 const sizeMap = {
@@ -31,7 +35,8 @@ const GlowCard: React.FC<GlowCardProps> = ({
   size = 'md',
   width,
   height,
-  customSize = false
+  customSize = false,
+  radius = 40
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
@@ -52,7 +57,7 @@ const GlowCard: React.FC<GlowCardProps> = ({
     return () => document.removeEventListener('pointermove', syncPointer);
   }, []);
 
-  const { base, spread } = glowColorMap[glowColor];
+  const { base, spread } = glowColorMap[glowColor] || glowColorMap.blue;
 
   // Determine sizing
   const getSizeClasses = () => {
@@ -63,45 +68,51 @@ const GlowCard: React.FC<GlowCardProps> = ({
   };
 
   const getInlineStyles = () => {
-    const baseStyles: any = {
+    return {
       '--base': base,
       '--spread': spread,
-      '--radius': '14',
-      '--border': '3',
-      '--backdrop': 'hsl(0 0% 60% / 0.12)',
-      '--backup-border': 'var(--backdrop)',
-      '--size': '200',
-      '--outer': '1',
-      '--border-size': 'calc(var(--border, 2) * 1px)',
-      '--spotlight-size': 'calc(var(--size, 150) * 1px)',
-      '--hue': 'calc(var(--base) + (var(--xp, 0) * var(--spread, 0)))',
-      backgroundImage: `radial-gradient(
+      '--radius': radius,
+      '--hue': `calc(${base} + (var(--xp, 0) * ${spread}))`,
+      '--card-width': width !== undefined ? (typeof width === 'number' ? `${width}px` : width) : 'auto',
+      '--card-height': height !== undefined ? (typeof height === 'number' ? `${height}px` : height) : 'auto',
+    };
+  };
+
+  const beforeAfterStyles = `
+    [data-glow] {
+      --border: 1.5;
+      --backdrop: hsl(0 0% 10% / 0.5);
+      --backup-border: var(--backdrop);
+      --size: 200;
+      --outer: 1;
+      --border-size: calc(var(--border, 2) * 1px);
+      --spotlight-size: calc(var(--size, 150) * 1px);
+      
+      background-image: radial-gradient(
         var(--spotlight-size) var(--spotlight-size) at
         calc(var(--x, 0) * 1px)
         calc(var(--y, 0) * 1px),
         hsl(var(--hue, 210) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 70) * 1%) / var(--bg-spot-opacity, 0.1)), transparent
-      )`,
-      backgroundColor: 'var(--backdrop, transparent)',
-      backgroundSize: 'calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)))',
-      backgroundPosition: '50% 50%',
-      backgroundAttachment: 'fixed',
-      border: 'var(--border-size) solid var(--backup-border)',
-      position: 'relative' as const,
-      touchAction: 'none' as const,
-    };
+      );
+      background-color: var(--backdrop, transparent);
+      background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
+      background-position: 50% 50%;
+      background-attachment: fixed;
+      border: var(--border-size) solid var(--backup-border);
+      position: relative;
+      touch-action: none;
+      border-radius: calc(var(--radius) * 1px);
+      width: var(--card-width);
+      height: var(--card-height);
 
-    // Add width and height if provided
-    if (width !== undefined) {
-      baseStyles.width = typeof width === 'number' ? `${width}px` : width;
+      --base: ${base};
+      --spread: ${spread};
+      --radius: ${radius};
+      --hue: calc(var(--base) + (var(--xp, 0) * var(--spread)));
+      --card-width: ${width !== undefined ? (typeof width === 'number' ? `${width}px` : width) : 'auto'};
+      --card-height: ${height !== undefined ? (typeof height === 'number' ? `${height}px` : height) : 'auto'};
     }
-    if (height !== undefined) {
-      baseStyles.height = typeof height === 'number' ? `${height}px` : height;
-    }
 
-    return baseStyles;
-  };
-
-  const beforeAfterStyles = `
     [data-glow]::before,
     [data-glow]::after {
       pointer-events: none;
@@ -163,11 +174,9 @@ const GlowCard: React.FC<GlowCardProps> = ({
       <div
         ref={cardRef}
         data-glow
-        style={getInlineStyles()}
         className={`
           ${getSizeClasses()}
           ${!customSize ? 'aspect-[3/4]' : ''}
-          rounded-2xl 
           relative 
           grid 
           grid-rows-[1fr_auto] 

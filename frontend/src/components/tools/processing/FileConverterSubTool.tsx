@@ -9,7 +9,7 @@ import { GlowCard } from '@/src/components/ui/spotlight-card';
 
 export const FileConverterSubTool: React.FC = () => {
   const { subSlug } = useParams();
-  const currentCategory = categories.find(c => c.name === "Utility & Management");
+  const currentCategory = categories.find(c => c.id === "document-processing");
   const currentTool = currentCategory?.tools.find(t => t.id === "file-converter");
 
   if (!currentTool || !currentCategory) return null;
@@ -30,7 +30,6 @@ export const FileConverterSubTool: React.FC = () => {
   return (
     <div>
       <ToolHero 
-        isCompact
         categoryName={currentCategory.name}
         categoryColor={currentCategory.color}
         toolName={toolName}
@@ -49,8 +48,7 @@ export const FileConverterSubTool: React.FC = () => {
             <h3 className="text-2xl font-bold text-white mb-4 font-display">Select your file</h3>
             <p className="text-white/40 mb-10 text-lg">Drag and drop your file here or click to browse.</p>
             <button 
-              className="px-12 py-5 rounded-2xl text-white font-bold text-lg hover:brightness-110 transition-all shadow-2xl uppercase tracking-widest"
-              style={{ backgroundColor: currentCategory.color }}
+              className="px-12 py-5 rounded-2xl text-white font-bold text-lg hover:brightness-110 transition-all shadow-2xl uppercase tracking-widest bg-[#059669]"
             >
               Choose File
             </button>
