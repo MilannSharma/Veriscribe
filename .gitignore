@@ -4,7 +4,7 @@ dist/
 build/
 .vscode/
 MDs/
-Doc/
+/Doc/
 modules/
 .DS_Store
 *.log
