@@ -154,12 +154,6 @@ export const ToolHero: React.FC<ToolHeroProps> = ({
                 <span className="relative z-10">Launch Workspace</span>
                 <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1.5 transition-transform" />
               </button>
-              <button 
-                onClick={onSecondaryAction}
-                className="w-full sm:w-auto px-10 py-6 rounded-[20px] bg-white/5 border border-white/10 text-white/60 font-bold text-sm uppercase tracking-widest transition-all duration-300 hover:bg-white/10 hover:text-white flex items-center justify-center gap-3 backdrop-blur-sm"
-              >
-                Core Features
-              </button>
             </motion.div>
           </motion.div>
 

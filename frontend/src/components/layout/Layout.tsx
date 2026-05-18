@@ -11,6 +11,10 @@ import Lenis from "@studio-freight/lenis";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
 const AmbientOrbs = () => (
   <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
     <motion.div 
@@ -83,23 +87,19 @@ export const Layout = ({ children }: { children: ReactNode }) => {
       touchMultiplier: 1.8,
     });
 
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-
     // Sync ScrollTrigger with Lenis
     lenis.on("scroll", ScrollTrigger.update);
 
-    gsap.ticker.add((time) => {
+    // Drive Lenis exclusively via GSAP ticker for perfect, stutter-free scroll synchronization
+    const updateLenis = (time: number) => {
       lenis.raf(time * 1000);
-    });
+    };
+    gsap.ticker.add(updateLenis);
 
     gsap.ticker.lagSmoothing(0);
 
     return () => {
+      gsap.ticker.remove(updateLenis);
       lenis.destroy();
     };
   }, []);
@@ -107,6 +107,11 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
     
+    // Refresh GSAP ScrollTrigger after the page transition has finished
+    const refreshTimer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 600);
+
     // Handle hash scroll after page change
     if (window.location.hash) {
       setTimeout(() => {
@@ -115,6 +120,10 @@ export const Layout = ({ children }: { children: ReactNode }) => {
         if (element) element.scrollIntoView({ behavior: 'smooth' });
       }, 500); // Wait for page transition and rendering
     }
+
+    return () => {
+      clearTimeout(refreshTimer);
+    };
   }, [pathname]);
 
   return (
