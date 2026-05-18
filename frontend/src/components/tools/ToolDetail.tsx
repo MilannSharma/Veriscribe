@@ -219,10 +219,24 @@ export const ToolDetail = () => {
         }}
       />
 
-      {/* Workspace Section (Writing Tools Only) */}
-      {isWritingTool && (
+      {/* Workspace Section */}
+      {isWritingTool ? (
         <div id="workspace">
           <ToolWorkspace toolId={currentTool.id} categoryColor={currentCategory.color} />
+        </div>
+      ) : (
+        <div id="workspace" className="max-w-7xl mx-auto px-6 py-32 text-center space-y-6 border-t border-white/10 min-h-[70vh] flex flex-col items-center justify-center">
+          <div className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mx-auto border border-white/10">
+            <Sparkles className="w-10 h-10 text-violet-500 animate-pulse" />
+          </div>
+          <h2 className="text-3xl font-bold text-white font-display">Veriscribe working on this wait...</h2>
+          <p className="text-white/40 text-sm max-w-md mx-auto">We are currently building this tool with our high-accuracy multi-model system. Stay tuned!</p>
+          <button 
+            onClick={() => window.history.back()} 
+            className="btn-modern-light flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-wider mx-auto mt-8"
+          >
+            Go Back
+          </button>
         </div>
       )}
 

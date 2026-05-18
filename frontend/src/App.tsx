@@ -22,6 +22,8 @@ import { Privacy } from "./components/company/Privacy";
 import { Terms } from "./components/company/Terms";
 import { Cookies } from "./components/company/Cookies";
 import { BlogPostDetail } from "./components/company/BlogPostDetail";
+import { DocEditorSuite } from "./components/tools/doc/DocEditorSuite";
+import { DocStudio } from "./components/tools/doc/DocStudio";
 
 function App() {
   const location = useLocation();
@@ -50,6 +52,9 @@ function App() {
           
           {/* Intelligence & Research Tools */}
           <Route path="/tools/multi-source-intelligence" element={<MultiSourceIntelligence />} />
+          
+          <Route path="/tools/doc-editor" element={<DocEditorSuite />} />
+          <Route path="/tools/doc-studio" element={<DocStudio />} />
           
           {/* Standard Tool Pages (Generic Fallback) */}
           <Route path="/tools/:toolId" element={<ToolDetail />} />

@@ -38,6 +38,7 @@ export const AIDetector = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [compareMode, setCompareMode] = useState(false);
+  const [selectedModel, setSelectedModel] = useState('Nexa Pro');
 
   const features = [
     { 
@@ -47,7 +48,7 @@ export const AIDetector = () => {
     },
     { 
       title: "8-Model Ensemble", 
-      description: "Parallel testing across GPT-4, Claude 3, Llama 3, and legacy models.", 
+      description: "Parallel testing across Nexa Pro, Nexa Flash, Nexa Lite, and Nexa Preview.", 
       icon: Bot 
     },
     { 
@@ -180,6 +181,28 @@ export const AIDetector = () => {
                       />
                     </div>
                   )}
+                </div>
+              </div>
+              
+              {/* Model Selection */}
+              <div className="flex flex-col gap-2">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-white/40 px-2">Select Model</span>
+                <div className="flex gap-2 bg-white/5 p-1 rounded-2xl border border-white/10">
+                  {['Nexa Pro', 'Nexa Flash', 'Nexa Lite', 'Nexa Preview'].map((model) => (
+                    <button
+                      key={model}
+                      type="button"
+                      onClick={() => setSelectedModel(model)}
+                      className={cn(
+                        "flex-1 py-2.5 text-[10px] font-black uppercase tracking-wider rounded-xl transition-all",
+                        selectedModel === model 
+                          ? "bg-[#3B5BDB] text-white shadow-lg" 
+                          : "text-white/40 hover:text-white hover:bg-white/5"
+                      )}
+                    >
+                      {model}
+                    </button>
+                  ))}
                 </div>
               </div>
               
@@ -328,10 +351,10 @@ export const AIDetector = () => {
                             </div>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                               {[
-                                { label: 'GPTZero-4', score: 98, status: 'Human' },
-                                { label: 'Copyleaks Pro', score: 92, status: 'Human' },
-                                { label: 'Originality.ai', score: 89, status: 'Uncertain' },
-                                { label: 'Veriscribe Neural', score: 99, status: 'Human' }
+                                { label: 'Nexa Pro', score: 98, status: 'Human' },
+                                { label: 'Nexa Flash', score: 92, status: 'Human' },
+                                { label: 'Nexa Lite', score: 89, status: 'Uncertain' },
+                                { label: 'Nexa Preview', score: 99, status: 'Human' }
                               ].map((model, i) => (
                                 <div key={i} className="p-5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-center justify-between group hover:bg-white/10 transition-all cursor-default">
                                   <span className="text-sm font-bold text-white/60 tracking-tight">{model.label}</span>
@@ -413,10 +436,10 @@ export const AIDetector = () => {
                             const bodyText = inputMode === 'file' ? uploadedFile?.content : inputText;
                             
                             const reportContent = `FORENSIC PATTERN CLASSIFICATION ANALYSIS:\n\n` +
-                              `• ENSEMBLE MODEL 1 (GPT-Zero Model): 86% AI Probability\n` +
-                              `• ENSEMBLE MODEL 2 (RoBERTa Classifiers): 82% AI Probability\n` +
-                              `• ENSEMBLE MODEL 3 (Perplexity Scanners): 88% AI Probability\n` +
-                              `• ENSEMBLE MODEL 4 (Burstiness Detectors): 80% AI Probability\n\n` +
+                              `• ENSEMBLE MODEL 1 (Nexa Pro): 86% AI Probability\n` +
+                              `• ENSEMBLE MODEL 2 (Nexa Flash): 82% AI Probability\n` +
+                              `• ENSEMBLE MODEL 3 (Nexa Lite): 88% AI Probability\n` +
+                              `• ENSEMBLE MODEL 4 (Nexa Preview): 80% AI Probability\n\n` +
                               `CONCLUSION: The linguistic density analysis shows significant indicators of AI-generated content. Semantic structure, sentence length variability (burstiness), and vocabulary patterns (perplexity) strongly match generative model signatures.`;
                             
                             exportToPDF("AI Detector", reportContent, {

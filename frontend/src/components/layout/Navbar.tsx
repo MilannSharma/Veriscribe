@@ -1,9 +1,19 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/src/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Menu, X, User, LogOut, ChevronDown } from "lucide-react";
+import { Sparkles, Menu, X, User, LogOut, ChevronDown, Search } from "lucide-react";
 import { useState, useEffect } from "react";
 import { isLoggedIn, logoutUser } from "@/src/lib/auth";
+import { categories } from "@/src/data/tools";
+import { FileText } from "lucide-react";
+
+const mockFiles = [
+  { name: "Quarterly Report Q1.docx", type: "file", route: "#" },
+  { name: "Financial Projection.xlsx", type: "file", route: "#" },
+  { name: "AI Research Paper.pdf", type: "file", route: "#" },
+];
+
+const allTools = categories.flatMap(cat => cat.tools);
 
 export const Navbar = ({ onSignIn }: { onSignIn?: () => void }) => {
   const location = useLocation();
@@ -15,6 +25,23 @@ export const Navbar = ({ onSignIn }: { onSignIn?: () => void }) => {
   const [userName, setUserName] = useState(localStorage.getItem('veriscribe_user_name') || 'User');
   const [userEmail, setUserEmail] = useState(localStorage.getItem('veriscribe_user_email') || '');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredTools = searchQuery.trim() === '' 
+    ? [] 
+    : allTools.filter(tool => 
+        tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        tool.tagline.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+
+  const filteredFiles = searchQuery.trim() === '' 
+    ? [] 
+    : mockFiles.filter(file => 
+        file.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+
+  const hasResults = filteredTools.length > 0 || filteredFiles.length > 0;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -61,11 +88,101 @@ export const Navbar = ({ onSignIn }: { onSignIn?: () => void }) => {
   return (
     <div className="fixed top-0 left-0 right-0 z-[100] px-6 py-6 pointer-events-none">
       <nav className={cn(
-        "max-w-7xl mx-auto flex items-center justify-between px-8 py-4 rounded-[24px] transition-all duration-700 pointer-events-auto border",
+        "max-w-7xl mx-auto flex items-center justify-between px-8 py-4 rounded-[24px] transition-all duration-700 pointer-events-auto border relative",
         isScrolled 
           ? "bg-black/60 backdrop-blur-2xl border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]" 
           : "bg-transparent border-transparent"
       )}>
+        <AnimatePresence>
+          {isSearchOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="absolute inset-0 bg-black/95 backdrop-blur-2xl border border-white/10 rounded-[24px] px-8 flex items-center gap-4 z-50 pointer-events-auto"
+            >
+              <Search className="w-5 h-5 text-violet-500" />
+              <input
+                type="text"
+                placeholder="Search files and tools..."
+                className="flex-1 bg-transparent border-none text-white placeholder:text-white/20 focus:outline-none text-lg"
+                autoFocus
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <button 
+                onClick={() => {
+                  setIsSearchOpen(false);
+                  setSearchQuery('');
+                }} 
+                className="text-white/40 hover:text-white p-2"
+                aria-label="Close search"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              {/* Search Results Dropdown */}
+              {searchQuery && (
+                <div className="absolute top-full left-0 right-0 mt-2 bg-black/95 backdrop-blur-2xl border border-white/10 rounded-[24px] p-4 shadow-2xl max-h-[400px] overflow-y-auto custom-scrollbar flex flex-col gap-2">
+                  {!hasResults && (
+                    <div className="text-white/20 text-sm text-center py-8">No results found for "{searchQuery}"</div>
+                  )}
+                  
+                  {filteredTools.length > 0 && (
+                    <div>
+                      <div className="text-[10px] font-black uppercase tracking-widest text-violet-400 px-3 mb-2">Tools</div>
+                      {filteredTools.map(tool => (
+                        <Link 
+                          key={tool.id} 
+                          to={tool.route}
+                          onClick={() => {
+                            setIsSearchOpen(false);
+                            setSearchQuery('');
+                          }}
+                          className="flex items-center gap-4 p-3 hover:bg-white/5 rounded-xl transition-colors"
+                        >
+                          <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center border border-white/10">
+                            <tool.icon className="w-5 h-5 text-violet-500" />
+                          </div>
+                          <div>
+                            <div className="text-white font-bold text-sm">{tool.name}</div>
+                            <div className="text-white/40 text-xs">{tool.tagline}</div>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+
+                  {filteredFiles.length > 0 && (
+                    <div>
+                      <div className="text-[10px] font-black uppercase tracking-widest text-emerald-400 px-3 mb-2 mt-2">Files</div>
+                      {filteredFiles.map((file, i) => (
+                        <Link 
+                          key={i} 
+                          to={file.route}
+                          onClick={() => {
+                            setIsSearchOpen(false);
+                            setSearchQuery('');
+                          }}
+                          className="flex items-center gap-4 p-3 hover:bg-white/5 rounded-xl transition-colors"
+                        >
+                          <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center border border-white/10">
+                            <FileText className="w-5 h-5 text-emerald-500" />
+                          </div>
+                          <div>
+                            <div className="text-white font-bold text-sm">{file.name}</div>
+                            <div className="text-white/40 text-xs">Stored in Cloud</div>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <Link 
           to="/" 
           onClick={handleLogoClick}
@@ -79,7 +196,6 @@ export const Navbar = ({ onSignIn }: { onSignIn?: () => void }) => {
             />
           </div>
           <span className="text-2xl font-black tracking-tighter text-white font-display">Veriscribe</span>
-          <div className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-violet-500 animate-ping opacity-75" />
         </Link>
         
         <div className="hidden md:flex items-center gap-10">
@@ -98,6 +214,14 @@ export const Navbar = ({ onSignIn }: { onSignIn?: () => void }) => {
         </div>
 
         <div className="flex items-center gap-6 relative">
+          <button 
+            onClick={() => setIsSearchOpen(!isSearchOpen)}
+            className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-colors" 
+            aria-label="Search"
+          >
+            <Search className="w-4 h-4" />
+          </button>
+          
           {loggedIn ? (
             <div className="relative pointer-events-auto">
               <button 
